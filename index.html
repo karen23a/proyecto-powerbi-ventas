@@ -1,24 +1,1076 @@
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f9e6f1"><meta name="description" content="Proyecto de análisis de ventas con Power BI, ETL, visualización y asociación de variables.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f9e6f1">
 <title>Bloom Analytics | Proyecto Power BI</title>
+
 <style>
-:root{--ink:#30253d;--muted:#756b83;--pink:#ed4fa0;--pink2:#f6a8d2;--lilac:#9472dc;--bg:#fff8fc;--card:#fff;--line:#f0dce9;--shadow:0 14px 40px #ae6b9b19}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,Segoe UI,sans-serif}a{color:inherit;text-decoration:none}header{position:sticky;top:0;z-index:5;background:#fffdfdeb;backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}.nav{max-width:1160px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 24px}.brand{font-weight:900;font-size:1.15rem;letter-spacing:-.5px}.brand span{color:var(--pink)}nav{display:flex;gap:16px;flex-wrap:wrap}nav a{font-size:.84rem;font-weight:650;color:#685b75}nav a:hover{color:var(--pink)}.wrap{max-width:1160px;margin:auto;padding:0 24px}.hero{padding:90px 0 80px;background:radial-gradient(circle at 83% 20%,#f4c2f5 0,transparent 37%),radial-gradient(circle at 15% 60%,#ffd1e5 0,transparent 42%),linear-gradient(135deg,#fff8fc,#f8f0ff)}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:50px}.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #f1c9df;border-radius:50px;padding:7px 15px;color:#ad397c;font-size:.8rem;font-weight:800;letter-spacing:.05em}h1{font-size:clamp(2.7rem,6vw,5rem);line-height:1.06;letter-spacing:-.065em;margin:22px 0}h1 em{font-style:normal;background:linear-gradient(95deg,#f24e9e,#9b68dc);background-clip:text;color:transparent}h2{font-size:clamp(1.7rem,3vw,2.6rem);letter-spacing:-.045em;line-height:1.2;margin:10px 0 18px}h3{margin:8px 0;font-size:1.13rem}.lead{font-size:1.08rem;color:#655974;max-width:590px}.buttons{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}.btn{border:0;border-radius:14px;padding:12px 20px;font-weight:800;cursor:pointer;display:inline-block}.primary{background:linear-gradient(110deg,#e84b99,#9b6be1);color:#fff;box-shadow:0 8px 20px #dc62b24d}.secondary{background:white;border:1px solid #edcfe2}.hero-art{border:1px solid #ffffffbb;border-radius:28px;padding:23px;background:#ffffffab;box-shadow:0 28px 65px #b865ab30;transform:rotate(2deg)}.art-head{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;font-weight:800}.dots{color:var(--pink)}.art-number{font-size:2.4rem;font-weight:900;letter-spacing:-.06em;margin:15px 0 0}.art-sub{font-size:.75rem;color:var(--muted)}.bars{height:165px;display:flex;gap:15px;align-items:end;margin-top:26px;padding:0 8px;border-bottom:2px solid #edd8ec}.bars i{display:block;flex:1;border-radius:10px 10px 0 0;background:linear-gradient(180deg,#ee6cb3,#a48be8);height:var(--h);animation:rise 1s ease both}@keyframes rise{from{height:0}to{height:var(--h)}}.art-foot{display:flex;justify-content:space-between;margin-top:10px;color:var(--muted);font-size:.74rem}.section{padding:76px 0}.section.alt{background:#fff}.tag{color:#d64392;text-transform:uppercase;letter-spacing:.15em;font-size:.76rem;font-weight:900}.intro{max-width:770px;color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:30px}.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px;box-shadow:var(--shadow)}.card p,.card li{color:var(--muted)}.card .symbol{font-size:1.9rem}.stat{font-size:1.7rem;font-weight:900;color:#a348a1;letter-spacing:-.04em}.step{display:flex;align-items:flex-start;gap:15px}.num{display:grid;place-items:center;min-width:34px;height:34px;border-radius:12px;background:#fce1f0;color:#c43886;font-weight:900}.wide{grid-column:span 2}.diagram{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:32px 0}.node{border-radius:15px;border:2px solid #edc7e4;padding:18px;text-align:center;background:white;min-width:150px;font-weight:800}.node.fact{background:#fce1f0;border-color:#e77db8}.arrow{font-size:1.6rem;color:#bc77c0}.chart-box{padding:18px;border-radius:16px;background:#fff7fc;border:1px solid #f4d9e9}.chart-title{font-weight:850;margin-bottom:12px}.bar-row{display:grid;grid-template-columns:95px 1fr 65px;gap:10px;align-items:center;margin:12px 0;font-size:.85rem}.track{background:#f4e5f1;border-radius:99px;overflow:hidden;height:16px}.fill{height:100%;width:var(--w);background:linear-gradient(90deg,#ed6cae,#a27ae6);border-radius:99px}.note{border-left:4px solid var(--pink);background:#fff0f8;border-radius:0 14px 14px 0;padding:17px 20px;margin-top:22px;color:#604a67}.shots{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:24px}.shot{border:2px dashed #edc8df;background:#fff9fd;border-radius:20px;padding:30px;text-align:center;color:#866e84}.shot strong{display:block;color:#a93b86;margin-top:8px}.shot small{display:block;margin-top:6px}.pill{display:inline-block;background:#f7e2f2;color:#a33b86;border-radius:50px;padding:5px 12px;font-size:.8rem;font-weight:800}.foot{background:#34253f;color:#f8eafa;padding:34px 0;text-align:center}.foot a{color:#ffb5dc}.scatter{width:100%;height:auto}.scatter text{font:12px system-ui;fill:#79657f}.scatter circle{fill:#e75b9e;opacity:.75}.scatter .gridline{stroke:#e8d6e6;stroke-width:1}.small{font-size:.85rem;color:var(--muted)}@media(max-width:850px){.hero-grid,.grid,.shots{grid-template-columns:1fr}.wide{grid-column:auto}nav{gap:9px}nav a{font-size:.75rem}.hero{padding:55px 0}.section{padding:55px 0}.hero-art{transform:none}.bar-row{grid-template-columns:75px 1fr 55px}.nav{align-items:flex-start;flex-direction:column}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bars i{animation:none}}
+:root {
+  --ink: #30253d;
+  --muted: #756b83;
+  --pink: #ed4fa0;
+  --lilac: #9472dc;
+  --bg: #fff8fc;
+  --line: #f0dce9;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  line-height: 1.7;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+a { color: inherit; text-decoration: none; }
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fffdfdf2;
+  border-bottom: 1px solid var(--line);
+}
+
+.nav {
+  max-width: 1160px;
+  margin: auto;
+  padding: 15px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.brand {
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.brand span { color: var(--pink); }
+
+nav {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  font-size: 13px;
+  font-weight: 700;
+  color: #685b75;
+}
+
+nav a:hover { color: var(--pink); }
+
+.wrap {
+  max-width: 1160px;
+  margin: auto;
+  padding: 0 24px;
+}
+
+.hero {
+  padding: 90px 0;
+  background:
+    radial-gradient(circle at 80% 20%, #f4c2f5, transparent 40%),
+    radial-gradient(circle at 15% 60%, #ffd1e5, transparent 45%),
+    linear-gradient(135deg, #fff8fc, #f8f0ff);
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.eyebrow, .pill {
+  display: inline-block;
+  background: #f7e2f2;
+  color: #a33b86;
+  border-radius: 30px;
+  padding: 7px 15px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+h1 {
+  font-size: clamp(45px, 6vw, 78px);
+  line-height: 1.1;
+  letter-spacing: -3px;
+}
+
+h1 em {
+  font-style: normal;
+  background: linear-gradient(90deg, #f24e9e, #9b68dc);
+  background-clip: text;
+  color: transparent;
+}
+
+h2 {
+  font-size: clamp(30px, 4vw, 43px);
+  line-height: 1.2;
+  letter-spacing: -1px;
+  margin: 15px 0;
+}
+
+h3 { font-size: 19px; }
+
+p { color: var(--muted); }
+
+.lead { font-size: 18px; }
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.btn {
+  padding: 13px 20px;
+  border-radius: 14px;
+  font-weight: 800;
+}
+
+.primary {
+  color: white;
+  background: linear-gradient(110deg, #e84b99, #9b6be1);
+}
+
+.secondary {
+  background: white;
+  border: 1px solid var(--line);
+}
+
+.hero-art {
+  background: #ffffffb8;
+  border: 1px solid white;
+  border-radius: 28px;
+  padding: 25px;
+  box-shadow: 0 25px 60px #b865ab30;
+}
+
+.art-number {
+  font-size: 43px;
+  font-weight: 900;
+}
+
+.bars {
+  height: 170px;
+  display: flex;
+  align-items: end;
+  gap: 15px;
+  margin: 30px 0 12px;
+}
+
+.bars i {
+  flex: 1;
+  height: var(--h);
+  border-radius: 9px 9px 0 0;
+  background: linear-gradient(#ee6cb3, #a48be8);
+}
+
+.art-foot {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.section { padding: 78px 0; }
+
+.section.alt { background: white; }
+
+.tag {
+  color: #d64392;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.intro {
+  max-width: 850px;
+  font-size: 17px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 26px;
+  box-shadow: 0 14px 40px #ae6b9b19;
+}
+
+.symbol { font-size: 30px; }
+
+.stat {
+  font-size: 28px;
+  font-weight: 900;
+  color: #a348a1;
+}
+
+.note {
+  background: #fff0f8;
+  border-left: 4px solid var(--pink);
+  border-radius: 0 14px 14px 0;
+  padding: 18px 22px;
+  margin-top: 25px;
+  color: #604a67;
+}
+
+.step {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.num {
+  background: #fce1f0;
+  color: #c43886;
+  padding: 3px 13px;
+  border-radius: 12px;
+  font-weight: 900;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  margin-top: 25px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.data-table th,
+.data-table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.data-table th {
+  background: #fce1f0;
+}
+
+.table-wrap { overflow-x: auto; }
+
+/* Modelo estrella */
+
+.star {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto 45px auto;
+  gap: 12px;
+  max-width: 850px;
+  margin: 35px auto;
+  align-items: center;
+}
+
+.node {
+  padding: 22px 12px;
+  border: 2px solid #edc7e4;
+  border-radius: 17px;
+  background: white;
+  text-align: center;
+  font-weight: 850;
+}
+
+.node small {
+  display: block;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.node.fact {
+  background: #fce1f0;
+  border-color: #e77db8;
+}
+
+.date {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.vertical-line {
+  grid-column: 2;
+  grid-row: 2;
+  width: 3px;
+  height: 45px;
+  background: #bc77c0;
+  justify-self: center;
+}
+
+.star-bottom {
+  grid-column: 1 / 4;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.star-bottom .node { flex: 1; }
+
+.connector {
+  height: 3px;
+  background: #bc77c0;
+  width: 40px;
+  flex-shrink: 0;
+}
+
+/* Resultados */
+
+.chart-box {
+  background: #fff7fc;
+  border: 1px solid #f4d9e9;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 90px 1fr 50px;
+  align-items: center;
+  gap: 10px;
+  margin: 13px 0;
+}
+
+.track {
+  height: 16px;
+  background: #f4e5f1;
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.fill {
+  width: var(--w);
+  height: 100%;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #ed6cae, #a27ae6);
+}
+
+/* Evidencias */
+
+.shots {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.shot {
+  border: 2px dashed #edc8df;
+  background: #fff9fd;
+  border-radius: 20px;
+  padding: 25px;
+  text-align: center;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.shot strong {
+  display: block;
+  color: #a93b86;
+  margin-top: 12px;
+}
+
+.shot small {
+  display: block;
+  color: var(--muted);
+}
+
+.wide { grid-column: span 2; }
+
+.scatter { width: 100%; height: auto; }
+
+.scatter text {
+  font: 12px system-ui;
+  fill: #79657f;
+}
+
+.scatter circle {
+  fill: #e75b9e;
+  opacity: .75;
+}
+
+.small {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+footer {
+  padding: 35px;
+  background: #34253f;
+  color: white;
+  text-align: center;
+}
+
+@media (max-width: 850px) {
+  .hero-grid, .grid, .shots {
+    grid-template-columns: 1fr;
+  }
+  .wide { grid-column: auto; }
+  .nav { flex-direction: column; align-items: flex-start; }
+  .section { padding: 55px 0; }
+}
+
+@media (max-width: 550px) {
+  .star { display: block; }
+  .star .node { margin: 12px 0; }
+  .star-bottom { flex-direction: column; }
+  .connector {
+    width: 3px;
+    height: 25px;
+  }
+  .vertical-line { margin: auto; }
+}
 </style>
 </head>
+
 <body>
-<header><div class="nav"><a class="brand" href="#inicio">✿ Bloom<span>Analytics</span></a><nav><a href="#proyecto">Proyecto</a><a href="#etl">ETL</a><a href="#modelo">Modelo</a><a href="#resultados">Resultados</a><a href="#asociaciones">Asociaciones</a><a href="#evidencias">Evidencias</a><a href="#conclusiones">Conclusiones</a></nav></div></header>
+
+<header>
+  <div class="nav">
+    <a class="brand" href="#inicio">✿ Bloom<span>Analytics</span></a>
+    <nav>
+      <a href="#proyecto">Proyecto</a>
+      <a href="#etl">ETL</a>
+      <a href="#modelo">Modelo</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#asociaciones">Asociaciones</a>
+      <a href="#evidencias">Evidencias</a>
+      <a href="#conclusiones">Conclusiones</a>
+    </nav>
+  </div>
+</header>
+
 <main>
-<section class="hero" id="inicio"><div class="wrap hero-grid"><div><span class="eyebrow">✦ PROYECTO INTEGRADOR · POWER BI</span><h1>Los datos cuentan <em>historias.</em></h1><p class="lead">De datos de ventas a decisiones informadas: limpieza, modelo estrella, visualizaciones y análisis de asociaciones en un solo proyecto.</p><div class="buttons"><a class="btn primary" href="#resultados">Explorar resultados ✨</a><a class="btn secondary" href="#etl">Ver metodología</a></div></div><div class="hero-art" aria-label="Ilustración de un panel analítico"><div class="art-head"><span>✿ Sales overview</span><span class="dots">● ● ●</span></div><div class="art-number">Power BI</div><div class="art-sub">Visualización y análisis de ventas</div><div class="bars"><i style="--h:37%"></i><i style="--h:57%"></i><i style="--h:46%"></i><i style="--h:82%"></i><i style="--h:66%"></i><i style="--h:100%"></i><i style="--h:76%"></i></div><div class="art-foot"><span>Preparación</span><span>Modelo</span><span>Hallazgos</span></div></div></div></section>
-<section class="section" id="proyecto"><div class="wrap"><span class="tag">01 · El proyecto</span><h2>Una visión integral de las ventas 💗</h2><p class="intro">Este caso de negocio explora transacciones comerciales mediante Power BI. El propósito es identificar patrones de ventas por región, segmento y categoría, y distinguir entre relaciones estadísticas y explicaciones causales.</p><div class="grid"><article class="card"><div class="symbol">🧹</div><h3>Datos preparados</h3><p>Transformación de tipos, revisión de calidad y organización de las tablas en Power Query.</p></article><article class="card"><div class="symbol">🧩</div><h3>Modelo estrella</h3><p>Una tabla de hechos conectada con dimensiones de cliente, producto y fecha.</p></article><article class="card"><div class="symbol">📊</div><h3>Información visual</h3><p>Reportes interactivos para explorar ventas, productos, clientes y asociaciones.</p></article></div></div></section>
-<section class="section alt" id="etl"><div class="wrap"><span class="tag">02 · Preparación de datos</span><h2>Del archivo CSV al análisis ✨</h2><p class="intro">El proceso ETL convierte los archivos originales en datos listos para el modelo analítico.</p><div class="grid"><article class="card step"><span class="num">1</span><div><h3>Extraer</h3><p>Importación de cuatro archivos CSV: hechos_ventas, dim_cliente, dim_producto y dim_fecha.</p></div></article><article class="card step"><span class="num">2</span><div><h3>Transformar</h3><p>Promoción de encabezados, ajuste de fechas, identificadores y campos numéricos; revisión de valores vacíos y errores de conversión.</p></div></article><article class="card step"><span class="num">3</span><div><h3>Cargar</h3><p>Aplicación de cambios y validación de relaciones activas entre hechos y dimensiones.</p></div></article></div><div class="note"><strong>Calidad de datos:</strong> es importante comprobar nulos, duplicados en las claves de dimensiones, consistencia de fechas y el tipo numérico de Importe. La transformación documentada no implica por sí sola que todas estas verificaciones hayan sido aprobadas.</div></div></section>
-<section class="section" id="modelo"><div class="wrap"><span class="tag">03 · Modelo de datos</span><h2>Modelo estrella ⭐</h2><p class="intro">La tabla de ventas concentra las transacciones. Las dimensiones permiten analizarlas desde distintas perspectivas.</p><div class="diagram"><div class="node">👤 dim_cliente<br><span class="small">ClienteID</span></div><span class="arrow">↔</span><div class="node fact">💖 hechos_ventas<br><span class="small">Importe · Cantidad · IDs</span></div><span class="arrow">↔</span><div class="node">🛍️ dim_producto<br><span class="small">ProductoID</span></div><span class="arrow">↔</span><div class="node">📅 dim_fecha<br><span class="small">Fecha</span></div></div><p class="small">Relaciones configuradas: muchos a uno (*:1), con filtro en una sola dirección desde cada dimensión hacia hechos_ventas. El diagrama es esquemático.</p></div></section>
-<section class="section alt" id="resultados"><div class="wrap"><span class="tag">04 · Visualización</span><h2>Resultados que se entienden de un vistazo</h2><p class="intro">El informe de Power BI está organizado en cuatro páginas: Resumen de Ventas, Análisis de Productos, Análisis de Clientes y Asociaciones y Hallazgos.</p><div class="grid"><article class="card"><span class="pill">Por región</span><h3>Participación de ventas</h3><div class="chart-box"><div class="chart-title">Distribución regional observada</div><div class="bar-row"><span>Centro</span><div class="track"><div class="fill" style="--w:100%"></div></div><span>Mayor</span></div><div class="bar-row"><span>Occidente</span><div class="track"><div class="fill" style="--w:70%"></div></div><span></span></div><div class="bar-row"><span>Norte</span><div class="track"><div class="fill" style="--w:54%"></div></div><span></span></div><div class="bar-row"><span>Sur</span><div class="track"><div class="fill" style="--w:17%"></div></div><span>Menor</span></div></div><p class="small">Gráfico ilustrativo de la clasificación visible en el informe; no sustituye los importes exactos de Power BI.</p></article><article class="card"><span class="pill">Por segmento</span><h3>Retail y Mayoreo</h3><p>La visualización permite contrastar el comportamiento comercial de ambos segmentos y explorar sus diferencias con filtros.</p><div class="note">En la captura del informe, Retail concentra un importe superior a Mayoreo.</div></article><article class="card"><span class="pill">Por categoría</span><h3>Accesorios y Cómputo</h3><p>La matriz combina región y categoría para identificar dónde se concentra la facturación y comparar la composición de ventas.</p><div class="note">Los resultados se interpretan según el contexto de los filtros activos.</div></article></div></div></section>
-<section class="section" id="asociaciones"><div class="wrap"><span class="tag">05 · Asociación y correlación</span><h2>¿Más unidades significan más ventas?</h2><div class="grid"><article class="card wide"><h3>Dispersión: cantidad frente a importe</h3><svg class="scatter" viewBox="0 0 650 300" role="img" aria-label="Esquema ilustrativo de puntos de ventas por cantidad"><line x1="55" y1="15" x2="55" y2="255" stroke="#bca5be"/><line x1="55" y1="255" x2="625" y2="255" stroke="#bca5be"/><g class="gridline"><line x1="55" y1="195" x2="625" y2="195"/><line x1="55" y1="135" x2="625" y2="135"/><line x1="55" y1="75" x2="625" y2="75"/></g><g id="dots"></g><text x="300" y="292">Cantidad de unidades</text><text x="10" y="22">Importe</text><text x="94" y="275">1</text><text x="208" y="275">2</text><text x="322" y="275">3</text><text x="436" y="275">4</text><text x="550" y="275">5</text></svg><p class="small">Diagrama conceptual para ilustrar la distribución. La evidencia del análisis es la gráfica de Power BI, que debe añadirse en la sección siguiente.</p></article><article class="card"><h3>Interpretación</h3><p>Se observa una tendencia visual general positiva entre cantidad e importe, con diferencias importantes para ventas de igual cantidad. Esto es compatible con la influencia de precios y tipos de producto.</p><p><strong>Importante:</strong> una nube de puntos no cuantifica por sí sola la fuerza de correlación. Para reportar un coeficiente, se debe calcular Pearson o Spearman sobre las observaciones.</p></article></div><div class="note"><strong>Correlación ≠ causalidad.</strong> Una asociación entre unidades e ingresos no demuestra que una variable sea la única causa de la otra. Además, el importe se calcula a partir de cantidad y precio unitario, por lo que parte de la asociación es matemática.</div></div></section>
-<section class="section alt" id="evidencias"><div class="wrap"><span class="tag">06 · Evidencia del proyecto</span><h2>Capturas reales de Power BI 📸</h2><p class="intro">Para completar la evidencia pública, exporta capturas de las páginas del informe y súbelas a este mismo repositorio con los nombres indicados. Aparecerán aquí automáticamente.</p><div class="shots"><div class="shot"><img src="resumen.png" alt="Captura del resumen de ventas" style="max-width:100%;border-radius:12px" onerror="this.style.display='none'"><strong>Resumen de ventas</strong><small>Archivo: resumen.png</small></div><div class="shot"><img src="productos.png" alt="Captura del análisis de productos" style="max-width:100%;border-radius:12px" onerror="this.style.display='none'"><strong>Análisis de productos</strong><small>Archivo: productos.png</small></div><div class="shot"><img src="clientes.png" alt="Captura del análisis de clientes" style="max-width:100%;border-radius:12px" onerror="this.style.display='none'"><strong>Análisis de clientes</strong><small>Archivo: clientes.png</small></div><div class="shot"><img src="asociaciones.png" alt="Captura del análisis de asociaciones" style="max-width:100%;border-radius:12px" onerror="this.style.display='none'"><strong>Asociaciones y hallazgos</strong><small>Archivo: asociaciones.png</small></div></div></div></section>
-<section class="section" id="conclusiones"><div class="wrap"><span class="tag">07 · Conclusiones</span><h2>De observar datos a tomar mejores decisiones 🌷</h2><div class="grid"><article class="card"><h3>💡 Hallazgo comercial</h3><p>La región Centro destaca en el informe observado, mientras que las comparaciones por segmento y categoría muestran que el comportamiento de ventas no es uniforme.</p></article><article class="card"><h3>🔎 Hallazgo analítico</h3><p>La dispersión sugiere una asociación positiva entre cantidad e importe, pero no basta para establecer causalidad ni una magnitud estadística precisa.</p></article><article class="card"><h3>🚀 Siguiente paso</h3><p>Validar calidad de datos, calcular un coeficiente de correlación y complementar la publicación con capturas del informe y, si está permitido, su enlace público.</p></article></div><p class="small" style="margin-top:28px">Proyecto académico elaborado con Power BI Desktop y publicado mediante GitHub Pages. Los elementos decorativos y esquemas de esta web no son datos adicionales del conjunto original.</p></div></section>
-</main><footer class="foot"><div class="wrap">✿ Bloom Analytics · Proyecto integrador de Power BI · 2026<br><a href="#inicio">Volver arriba ↑</a></div></footer>
-<script>const pts=[[1,20],[1,33],[1,47],[1,64],[2,25],[2,40],[2,83],[2,96],[2,108],[3,22],[3,48],[3,115],[3,125],[3,137],[4,30],[4,60],[4,144],[4,156],[4,169],[5,34],[5,65],[5,179],[5,193],[5,209],[5,221]];const svg=document.getElementById('dots');pts.forEach(([x,y])=>{const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',100+(x-1)*114);c.setAttribute('cy',250-y);c.setAttribute('r',5);svg.appendChild(c)});</script>
-</body></html>
+
+<!-- PORTADA -->
+
+<section class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">✦ PROYECTO INTEGRADOR · POWER BI</span>
+      <h1>Los datos cuentan <em>historias.</em></h1>
+      <p class="lead">
+        De datos de ventas a decisiones informadas:
+        limpieza, modelo estrella, visualizaciones
+        y análisis de asociaciones en un solo proyecto.
+      </p>
+      <div class="buttons">
+        <a class="btn primary" href="#resultados">Explorar resultados ✨</a>
+        <a class="btn secondary" href="#etl">Ver metodología</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <strong>✿ Sales overview</strong>
+      <div class="art-number">Power BI</div>
+      <p>Visualización y análisis de ventas</p>
+      <div class="bars">
+        <i style="--h:37%"></i>
+        <i style="--h:57%"></i>
+        <i style="--h:46%"></i>
+        <i style="--h:82%"></i>
+        <i style="--h:66%"></i>
+        <i style="--h:100%"></i>
+        <i style="--h:76%"></i>
+      </div>
+      <div class="art-foot">
+        <span>Preparación</span>
+        <span>Modelo</span>
+        <span>Hallazgos</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 PROYECTO -->
+
+<section class="section" id="proyecto">
+  <div class="wrap">
+    <span class="tag">01 · El proyecto</span>
+    <h2>Una visión integral de las ventas 💗</h2>
+
+    <p class="intro">
+      Este caso de negocio explora transacciones comerciales
+      mediante Power BI. El propósito es identificar patrones
+      de ventas por región, segmento y categoría, y distinguir
+      entre relaciones estadísticas y explicaciones causales.
+    </p>
+
+    <div class="grid">
+      <article class="card">
+        <div class="symbol">🧹</div>
+        <h3>Datos preparados</h3>
+        <p>Transformación de tipos, revisión de calidad y organización de las tablas en Power Query.</p>
+      </article>
+
+      <article class="card">
+        <div class="symbol">🧩</div>
+        <h3>Modelo estrella</h3>
+        <p>Una tabla de hechos conectada con dimensiones de cliente, producto y fecha.</p>
+      </article>
+
+      <article class="card">
+        <div class="symbol">📊</div>
+        <h3>Información visual</h3>
+        <p>Reportes interactivos para explorar ventas, productos, clientes y asociaciones.</p>
+      </article>
+    </div>
+
+    <div class="note">
+      <strong>Pregunta de negocio:</strong>
+      ¿Cómo varían las ventas por región, segmento y categoría,
+      y qué relaciones se observan entre unidades e importe?
+    </div>
+
+    <h3>Indicadores clave de desempeño (KPIs)</h3>
+
+    <div class="grid">
+      <article class="card">
+        <h3>Ventas Totales</h3>
+        <div class="stat">$7,416,318.43</div>
+        <p>Facturación acumulada de las transacciones analizadas.</p>
+      </article>
+
+      <article class="card">
+        <h3>Número de Ventas</h3>
+        <div class="stat">500</div>
+        <p>Cantidad de operaciones registradas.</p>
+      </article>
+
+      <article class="card">
+        <h3>Ticket Promedio</h3>
+        <div class="stat">$14,832.64</div>
+        <p>Importe promedio por operación.</p>
+      </article>
+    </div>
+
+    <p class="small">
+      Audiencia: responsables comerciales y personas interesadas
+      en el análisis del desempeño de ventas.
+      Los valores corresponden al resumen observado en Power BI.
+    </p>
+  </div>
+</section>
+
+<!-- 02 ETL -->
+
+<section class="section alt" id="etl">
+  <div class="wrap">
+    <span class="tag">02 · Preparación de datos</span>
+    <h2>Del archivo CSV al análisis ✨</h2>
+
+    <p class="intro">
+      El proceso ETL convierte los archivos originales
+      en datos listos para el modelo analítico.
+    </p>
+
+    <div class="grid">
+      <article class="card step">
+        <span class="num">1</span>
+        <div>
+          <h3>Extraer</h3>
+          <p>
+            Importación de cuatro archivos CSV:
+            hechos_ventas, dim_cliente, dim_producto y dim_fecha.
+          </p>
+        </div>
+      </article>
+
+      <article class="card step">
+        <span class="num">2</span>
+        <div>
+          <h3>Transformar</h3>
+          <p>
+            Promoción de encabezados, ajuste de fechas,
+            identificadores y campos numéricos;
+            revisión de valores vacíos y errores de conversión.
+          </p>
+        </div>
+      </article>
+
+      <article class="card step">
+        <span class="num">3</span>
+        <div>
+          <h3>Cargar</h3>
+          <p>
+            Aplicación de cambios y validación de relaciones
+            activas entre hechos y dimensiones.
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <div class="note">
+      <strong>Calidad de datos:</strong>
+      se consideran valores nulos, claves duplicadas,
+      consistencia de fechas, tipos de datos y relaciones.
+      Los resultados no cuantificados se mantienen pendientes
+      de verificación para evitar conclusiones incorrectas.
+    </div>
+
+    <h3>Documentación de calidad de datos</h3>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Control</th>
+            <th>Estado documentado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Valores nulos</td>
+            <td>Revisión descrita; resultado cuantitativo pendiente.</td>
+          </tr>
+          <tr>
+            <td>Duplicados en dimensiones</td>
+            <td>Resultado pendiente de documentar.</td>
+          </tr>
+          <tr>
+            <td>Fechas y tipos de datos</td>
+            <td>Ajustes descritos; errores no cuantificados.</td>
+          </tr>
+          <tr>
+            <td>Relaciones del modelo</td>
+            <td>Verificadas en Power BI.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 03 MODELO -->
+
+<section class="section" id="modelo">
+  <div class="wrap">
+    <span class="tag">03 · Modelo de datos</span>
+    <h2>Modelo estrella ⭐</h2>
+
+    <p class="intro">
+      La tabla hechos_ventas concentra las transacciones.
+      Las dimensiones permiten analizar las ventas
+      desde distintas perspectivas.
+    </p>
+
+    <div class="star">
+      <div class="node date">
+        📅 dim_fecha
+        <small>Fecha</small>
+      </div>
+
+      <div class="vertical-line"></div>
+
+      <div class="star-bottom">
+        <div class="node">
+          👤 dim_cliente
+          <small>ClienteID</small>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="node fact">
+          💖 hechos_ventas
+          <small>Importe · Cantidad · IDs</small>
+        </div>
+
+        <div class="connector"></div>
+
+        <div class="node">
+          🛍️ dim_producto
+          <small>ProductoID</small>
+        </div>
+      </div>
+    </div>
+
+    <p class="small">
+      Cada dimensión está conectada directamente con
+      hechos_ventas mediante una relación de muchos a uno (*:1).
+      El filtrado se realiza en una sola dirección desde
+      las dimensiones hacia la tabla de hechos.
+      La tabla dim_fecha está marcada como tabla de fechas.
+    </p>
+
+    <h3>Medidas DAX utilizadas</h3>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Medida</th>
+            <th>Propósito</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ventas Totales</td>
+            <td>Suma del importe de las ventas.</td>
+          </tr>
+          <tr>
+            <td>Número de Ventas</td>
+            <td>Conteo de transacciones.</td>
+          </tr>
+          <tr>
+            <td>Ticket Promedio</td>
+            <td>Importe promedio por venta.</td>
+          </tr>
+          <tr>
+            <td>Unidades Vendidas</td>
+            <td>Cantidad total de artículos vendidos.</td>
+          </tr>
+          <tr>
+            <td>Ventas Año Anterior</td>
+            <td>Comparación con el año previo.</td>
+          </tr>
+          <tr>
+            <td>Var % Año</td>
+            <td>Variación porcentual interanual.</td>
+          </tr>
+          <tr>
+            <td>% Ventas por Región</td>
+            <td>Participación regional de las ventas.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 04 RESULTADOS -->
+
+<section class="section alt" id="resultados">
+  <div class="wrap">
+    <span class="tag">04 · Visualización</span>
+    <h2>Resultados que se entienden de un vistazo</h2>
+
+    <p class="intro">
+      El informe de Power BI está organizado en cuatro páginas:
+      Resumen de Ventas, Análisis de Productos,
+      Análisis de Clientes y Asociaciones y Hallazgos.
+    </p>
+
+    <div class="grid">
+
+      <article class="card">
+        <span class="pill">Por región</span>
+        <h3>Participación de ventas</h3>
+
+        <div class="chart-box">
+          <strong>Distribución regional observada</strong>
+
+          <div class="bar-row">
+            <span>Centro</span>
+            <div class="track">
+              <div class="fill" style="--w:100%"></div>
+            </div>
+            <span>Mayor</span>
+          </div>
+
+          <div class="bar-row">
+            <span>Occidente</span>
+            <div class="track">
+              <div class="fill" style="--w:70%"></div>
+            </div>
+            <span></span>
+          </div>
+
+          <div class="bar-row">
+            <span>Norte</span>
+            <div class="track">
+              <div class="fill" style="--w:54%"></div>
+            </div>
+            <span></span>
+          </div>
+
+          <div class="bar-row">
+            <span>Sur</span>
+            <div class="track">
+              <div class="fill" style="--w:17%"></div>
+            </div>
+            <span>Menor</span>
+          </div>
+        </div>
+
+        <p class="small">
+          Gráfico ilustrativo; no sustituye los importes
+          exactos del informe de Power BI.
+        </p>
+      </article>
+
+      <article class="card">
+        <span class="pill">Por segmento</span>
+        <h3>Retail y Mayoreo</h3>
+
+        <p>
+          La visualización permite contrastar el
+          comportamiento comercial de ambos segmentos
+          y explorar sus diferencias mediante filtros.
+        </p>
+
+        <div class="note">
+          En el informe observado, Retail concentra
+          un importe superior a Mayoreo.
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="pill">Por categoría</span>
+        <h3>Accesorios y Cómputo</h3>
+
+        <p>
+          La matriz combina región y categoría para
+          identificar dónde se concentra la facturación
+          y comparar la composición de ventas.
+        </p>
+
+        <div class="note">
+          Los resultados se interpretan según el
+          contexto de los filtros activos.
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- 05 ASOCIACIONES -->
+
+<section class="section" id="asociaciones">
+  <div class="wrap">
+    <span class="tag">05 · Asociación y correlación</span>
+    <h2>¿Más unidades significan más ventas?</h2>
+
+    <div class="grid">
+      <article class="card wide">
+        <h3>Dispersión: cantidad frente a importe</h3>
+
+        <svg class="scatter" viewBox="0 0 650 300"
+             role="img"
+             aria-label="Diagrama conceptual de dispersión">
+
+          <line x1="55" y1="15" x2="55" y2="255"
+                stroke="#bca5be"/>
+          <line x1="55" y1="255" x2="625" y2="255"
+                stroke="#bca5be"/>
+
+          <g stroke="#e8d6e6">
+            <line x1="55" y1="195" x2="625" y2="195"/>
+            <line x1="55" y1="135" x2="625" y2="135"/>
+            <line x1="55" y1="75" x2="625" y2="75"/>
+          </g>
+
+          <g id="dots"></g>
+
+          <text x="300" y="292">Cantidad de unidades</text>
+          <text x="10" y="22">Importe</text>
+
+          <text x="94" y="275">1</text>
+          <text x="208" y="275">2</text>
+          <text x="322" y="275">3</text>
+          <text x="436" y="275">4</text>
+          <text x="550" y="275">5</text>
+        </svg>
+
+        <p class="small">
+          Gráfico conceptual ilustrativo.
+          La evidencia real se encuentra en la captura
+          de asociaciones del informe de Power BI.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>Interpretación</h3>
+
+        <p>
+          Se observa una tendencia visual general positiva
+          entre cantidad e importe, con diferencias importantes
+          para ventas de igual cantidad.
+        </p>
+
+        <p>
+          Esto es compatible con la influencia del precio
+          unitario y del tipo de producto.
+        </p>
+
+        <p>
+          Para cuantificar la correlación es necesario
+          calcular Pearson o Spearman sobre los datos reales.
+        </p>
+      </article>
+    </div>
+
+    <div class="note">
+      <strong>Correlación ≠ causalidad.</strong>
+      Una asociación entre unidades e ingresos no demuestra
+      que una variable sea la única causa de la otra.
+      Además, el importe se calcula a partir de cantidad
+      y precio unitario, por lo que parte de la relación
+      es matemática.
+    </div>
+  </div>
+</section>
+
+<!-- 06 EVIDENCIAS -->
+
+<section class="section alt" id="evidencias">
+  <div class="wrap">
+    <span class="tag">06 · Evidencia del proyecto</span>
+    <h2>Capturas reales de Power BI 📸</h2>
+
+    <p class="intro">
+      Las siguientes capturas corresponden a las cuatro
+      páginas del informe elaborado en Power BI.
+    </p>
+
+    <div class="shots">
+
+      <div class="shot">
+        <img src="resumen.png"
+             alt="Resumen de ventas">
+        <strong>Resumen de ventas</strong>
+        <small>Archivo: resumen.png</small>
+      </div>
+
+      <div class="shot">
+        <img src="productos.png"
+             alt="Análisis de productos">
+        <strong>Análisis de productos</strong>
+        <small>Archivo: productos.png</small>
+      </div>
+
+      <div class="shot">
+        <img src="clientes.png"
+             alt="Análisis de clientes">
+        <strong>Análisis de clientes</strong>
+        <small>Archivo: clientes.png</small>
+      </div>
+
+      <div class="shot">
+        <img src="asociaciones.png"
+             alt="Análisis de asociaciones">
+        <strong>Asociaciones y hallazgos</strong>
+        <small>Archivo: asociaciones.png</small>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 07 CONCLUSIONES -->
+
+<section class="section" id="conclusiones">
+  <div class="wrap">
+    <span class="tag">07 · Conclusiones</span>
+    <h2>De observar datos a tomar mejores decisiones 🌷</h2>
+
+    <div class="grid">
+
+      <article class="card">
+        <h3>💡 Hallazgo comercial</h3>
+        <p>
+          La región Centro destaca en el informe observado,
+          mientras que las comparaciones por segmento y
+          categoría muestran diferencias en el comportamiento
+          de las ventas.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>🔎 Hallazgo analítico</h3>
+        <p>
+          La dispersión sugiere una asociación positiva
+          entre cantidad e importe, pero no basta para
+          establecer causalidad ni una magnitud estadística
+          precisa.
+        </p>
+      </article>
+
+      <article class="card">
+        <h3>🚀 Siguiente paso</h3>
+        <p>
+          Validar cuantitativamente la calidad de los datos,
+          calcular un coeficiente de correlación y profundizar
+          en las diferencias comerciales identificadas.
+        </p>
+      </article>
+
+    </div>
+
+    <div class="note">
+      <strong>Limitaciones:</strong>
+      los resultados dependen de los datos disponibles
+      y de los filtros aplicados. Las gráficas decorativas
+      no representan mediciones adicionales.
+      Una asociación estadística no demuestra causalidad.
+    </div>
+
+    <p class="small">
+      Proyecto académico desarrollado con Power BI Desktop
+      y publicado mediante GitHub Pages.
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  ✿ Bloom Analytics · Proyecto integrador de Power BI · 2026
+  <p>
+    <a href="#inicio" style="color:#ffb5dc">
+      Volver arriba ↑
+    </a>
+  </p>
+</footer>
+
+<script>
+const pts = [
+  [1,20],[1,33],[1,47],[1,64],
+  [2,25],[2,40],[2,83],[2,96],[2,108],
+  [3,22],[3,48],[3,115],[3,125],[3,137],
+  [4,30],[4,60],[4,144],[4,156],[4,169],
+  [5,34],[5,65],[5,179],[5,193],[5,209],[5,221]
+];
+
+const svg = document.getElementById("dots");
+
+pts.forEach(([x,y]) => {
+  const c = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "circle"
+  );
+
+  c.setAttribute("cx", 100 + (x - 1) * 114);
+  c.setAttribute("cy", 250 - y);
+  c.setAttribute("r", 5);
+
+  svg.appendChild(c);
+});
+</script>
+
+</body>
+</html>
